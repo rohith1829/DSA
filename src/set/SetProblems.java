@@ -114,8 +114,35 @@ public class SetProblems {
         end = System.currentTimeMillis();
         System.out.println("TreeSet add: " + (end - start) + " ms");
     }
-    
-    
+
+    // 8. Intersection of Multiple Sets
+    public static Set<Integer> intersectionOfSets(List<Set<Integer>> sets) {
+        if (sets == null || sets.isEmpty()) return new HashSet<>();
+        Set<Integer> result = new HashSet<>(sets.get(0));
+        for (int i = 1; i < sets.size(); i++) {
+            result.retainAll(sets.get(i));
+        }
+        return result;
+    }
+
+    // 9. Union and Difference with Custom Objects
+    public static Set<Person> unionOfPersons(Set<Person> set1, Set<Person> set2) {
+        Set<Person> result = new TreeSet<>(set1);
+        result.addAll(set2);
+        return result;
+    }
+
+    public static Set<Person> differenceOfPersons(Set<Person> set1, Set<Person> set2) {
+        Set<Person> result = new TreeSet<>(set1);
+        result.removeAll(set2);
+        return result;
+    }
+
+    // 10. Remove Elements Based on Condition
+    public static void removeElementsBelowThreshold(TreeSet<Integer> set, int threshold) {
+        set.removeIf(num -> num < threshold);
+    }
+
     // Main method to demonstrate
     public static void main(String[] args) {
         System.out.println("1. Class-Specific Set Behavior:");
@@ -134,9 +161,34 @@ public class SetProblems {
         customObjectSetOperations();
 
         System.out.println("\n6. Subset Check:");
-        System.out.println(isSubset(new HashSet<>(Arrays.asList(1,2,3)), new HashSet<>(Arrays.asList(1,2,3,4))));
+        System.out.println(isSubset(new HashSet<>(Arrays.asList(1, 2, 3)), new HashSet<>(Arrays.asList(1, 2, 3, 4))));
 
         System.out.println("\n7. Performance Comparison:");
         performanceComparison();
+
+        System.out.println("\n8. Intersection of Multiple Sets:");
+        List<Set<Integer>> sets = Arrays.asList(
+                new HashSet<>(Arrays.asList(1, 2, 3)),
+                new HashSet<>(Arrays.asList(2, 3, 4)),
+                new HashSet<>(Arrays.asList(3, 4, 5))
+        );
+        System.out.println(intersectionOfSets(sets));
+
+        System.out.println("\n9. Union and Difference with Custom Objects:");
+        Set<Person> set1 = new TreeSet<>();
+        set1.add(new Person("Alice", 30));
+        set1.add(new Person("Bob", 25));
+
+        Set<Person> set2 = new TreeSet<>();
+        set2.add(new Person("Bob", 25));
+        set2.add(new Person("Charlie", 35));
+
+        System.out.println("Union: " + unionOfPersons(set1, set2));
+        System.out.println("Difference: " + differenceOfPersons(set1, set2));
+
+        System.out.println("\n10. Remove Elements Below Threshold:");
+        TreeSet<Integer> numbers = new TreeSet<>(Arrays.asList(1, 2, 3, 4, 5));
+        removeElementsBelowThreshold(numbers, 3);
+        System.out.println(numbers);
     }
 }
